@@ -42,7 +42,7 @@ class App extends Component{
           </TouchableOpacity>
           <Text styles = {styles.parent}>
             Tiêu đề
-            <Text style={styles.children}>Khóa  học l ập trình react native</Text>
+            <Text style={styles.children}>Khóa  học lập trình react native</Text>
           </Text>
         </View>
       </SafeAreaView>
