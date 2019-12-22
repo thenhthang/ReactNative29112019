@@ -32,7 +32,10 @@ export class Relative extends Component {
     ball: {
        position: 'absolute',
        //relative: Vị trí của nó sẽ phụ thuộc vào thành phần xung quanh nó
-       //absolute: vị trí của nó sẽ phụ thuộc vào thành phần chứa nó
+       //vị trí của nó sẽ canh với vị trí của thành phần gần nhất
+       //absolute: vị trí của nó sẽ phụ thuộc vào thành phần chứa nó, nó sẽ
+       //đè lên phần tử xung quanh nó nếu nó, thuộc tính này giúp nó trôi nổi
+       //trên thành phần xung quanh nó
        top: 40,
        left: 40,
        width: 40,
