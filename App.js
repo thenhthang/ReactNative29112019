@@ -20,7 +20,12 @@ import React,{Component} from 'react';
 import {
   View,Text,StatusBar,Platform,SafeAreaView, Button, TouchableOpacity,StyleSheet
 } from 'react-native';
-
+import Word from './components/Word';
+const words = [{id:1,en:'One',vi:'Một',isMemorized:true},
+              {id:2,en:'Two',vi:'Hai',isMemorized:false},
+              {id:3,en:'Three',vi:'Ba',isMemorized:false},
+              {id:4,en:'Four',vi:'Bốn',isMemorized:true},
+              {id:5,en:'Five',vi:'Năm',isMemorized:true}]
 export default class App extends Component{
   renderTitle(){
     if(Platform.OS === 'ios'){
@@ -30,25 +35,27 @@ export default class App extends Component{
     }
   }
   render(){
+    //Task 1: Ve ra 2 Button
+    //Task 2: isMemorized = true: render ra button Forgot và mà xanh lá
+    //Task 3: isMemorized = true: render hien thi vn = ... và nguoc lai
+    
     return(
-      <SafeAreaView>
-        <View style = {styles.container} >
-          <Text>{this.renderTitle()}</Text>
-          <Text style = {styles.parent}> 
-            Tiêu đề: 
-            <Text style = {styles.children} >
-              Khóa học lập trình React-native
-            </Text>
-          </Text>
-          <Text style={styles.textstyle} numberOfLines={3}  >
-          --Theo luật sư Ứng, vụ án này khá đặc biệt khi hành vi phạm tội của 14 bị cáo không có sự bàn bạc. Quá trình triển khai dự án, ông Son điều hành theo tinh thần của Thủ tướng, điều hành với tư cách người đứng đầu một bộ chứ không phải "chủ mưu cầm đầu" như cáo trạng quy kết.
-          Luật sư Phạm Công Hùng cũng cho rằng ông Son không phải chủ mưu. Ngay từ giai đoạn điều tra, điều tra viên đã "sắp sẵn" quan điểm này.
-          </Text>
-        </View>
+      <SafeAreaView style={{flex:1,marginHorizontal:20}}>
+        {/* <Word en="Hello" vi = "Xin chào"/>
+        <Word en="Good morning" vi = "Chào buổi sáng"/>
+        <Word en="Teacher" vi = "Giáo viên"/> */}
+        {
+          words.map((item)=>{
+            return (
+                <Word en = {item.en} vi = {item.vi} isMemorized={item.isMemorized} key={item.id}  >/></Word>
+              )
+          })
+        }
       </SafeAreaView>
-      
     )
   }
 }
-
+const styles = StyleSheet.create({
+  
+})
 

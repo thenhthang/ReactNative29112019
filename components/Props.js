@@ -3,7 +3,8 @@ import {View,Text, SafeAreaView} from 'react-native'
 export class User extends Component {
     render(){
       const user = this.props.data;
-      this.props.onReady('I am ready!');
+      this.props.onReady('I am ready!')
+      //Props chỉ được quyền dùng, không được quyền thay đổi nó
       return(
         <View>
           <Text>score: {this.props.score}</Text>
