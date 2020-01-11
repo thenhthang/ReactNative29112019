@@ -5,6 +5,7 @@ import {width, height} from '../dimension';
 import {Dropdown} from 'react-native-material-dropdown';
 
 export default class Filter extends Component {
+  //
   constructor(props) {
     super(props);
     this.state = {

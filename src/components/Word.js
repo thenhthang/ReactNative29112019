@@ -3,6 +3,7 @@ import {Text, View, TouchableOpacity, FlatList, Alert} from 'react-native';
 import {width, height} from '../dimension';
 
 export default class Word extends Component {
+  //
   removeWord = (id)=>{
     Alert.alert(
       'Do you want to remove this word ?',

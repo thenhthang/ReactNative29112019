@@ -5,6 +5,7 @@ import {width, height} from '../dimension';
 import WordModel from '../model/WordModal';
 
 export default class Form extends Component {
+  //
   constructor(props) {
     super(props);
     this.state = {
