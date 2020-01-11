@@ -20,16 +20,16 @@ export default class Filter extends Component {
       <Dropdown
         data={this.state.optionWord}
         containerStyle={{
-          top: width * 0.01,
-          width: width * 0.9,
-          height: width * 0.1,
-          borderRadius: 5,
           borderWidth: 1,
-          paddingLeft: width * 0.02,
+          borderColor:'mediumseagreen',
+          alignSelf:'auto',
+          height:50,
+          marginTop:5
         }}
         inputContainerStyle={{borderBottomColor: 'transparent'}}
         dropdownOffset={{top: width * 0.01, left: 0}}
         value={this.props.optionSelected}
+        onChangeText = {(Text)=>{this.props.onFilterMode(Text)}}
       />
     );
   }

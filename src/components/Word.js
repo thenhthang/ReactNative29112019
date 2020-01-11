@@ -1,8 +1,24 @@
 import React, {Component} from 'react';
-import {Text, View, TouchableOpacity, FlatList} from 'react-native';
+import {Text, View, TouchableOpacity, FlatList, Alert} from 'react-native';
 import {width, height} from '../dimension';
 
 export default class Word extends Component {
+  removeWord = (id)=>{
+    Alert.alert(
+      'Do you want to remove this word ?',
+      'Choose yes or no',
+      [
+        {
+          text: 'Yes',
+          onPress: () => {
+            this.props.onRemoveWord(id)
+          },
+        },
+        {text: 'No', style: 'cancel'},
+      ],
+      {cancelable: false},
+    );
+  }
   renderItemView = item => {
     const {en, id, vn, isMemorized} = item;
     const {optionSelected} = this.props;
@@ -42,7 +58,9 @@ export default class Word extends Component {
               backgroundColor: isMemorized ? '#208837' : '#C82233',
               paddingHorizontal: width / 15,
               paddingVertical: width / 40,
-            }}>
+            }}
+            onPress = {()=>{this.props.onToggleMemorized(id)}}
+            >
             <Text style={{color: 'white', fontSize: width / 20}}>
               {isMemorized ? 'Forgot' : 'isMemorized'}
             </Text>
@@ -52,7 +70,9 @@ export default class Word extends Component {
               backgroundColor: '#e0a800',
               paddingHorizontal: width / 15,
               paddingVertical: width / 40,
-            }}>
+            }}
+            onPress = {()=>{this.removeWord(id)}}
+            >
             <Text style={{color: 'black', fontSize: width / 20}}>Remove</Text>
           </TouchableOpacity>
         </View>

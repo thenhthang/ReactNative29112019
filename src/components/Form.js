@@ -2,6 +2,7 @@
 import React, {Component} from 'react';
 import {Text, View, TextInput, TouchableOpacity} from 'react-native';
 import {width, height} from '../dimension';
+import WordModel from '../model/WordModal';
 
 export default class Form extends Component {
   constructor(props) {
@@ -10,9 +11,28 @@ export default class Form extends Component {
       txtEn: '',
       txtVn: '',
     };
+    this.addWord = this.addWord.bind(this)
+  }
+  addWord = ()=>{
+    const {txtEn, txtVn} = this.state;
+    if (txtEn.length <= 0 || txtVn.length <= 0) {
+      return alert('Ban chua nhap du thong tin');
+    }
+    const newWord = new WordModel(
+      this.props.currentId + 1,
+      this.state.txtEn,
+      this.state.txtVn,
+      false
+    );
+   
+    this.props.onAddWord(newWord)
+    this.setState({
+      txtEn: '',
+      txtVn: ''
+    })
   }
   renderForm = () => {
-    const {shouldShowForm} = this.props;
+    const {shouldShowForm,onToggleForm} = this.props;
     if (shouldShowForm) {
       return (
         <View>
@@ -57,7 +77,9 @@ export default class Form extends Component {
                 backgroundColor: '#28a745',
                 padding: 15,
                 borderRadius: 8,
-              }}>
+              }}
+              onPress = {this.addWord}
+              >
               <Text style={{fontSize: 20, fontWeight: 'bold', color: 'white'}}>
                 Add word
               </Text>
@@ -67,7 +89,9 @@ export default class Form extends Component {
                 backgroundColor: 'red',
                 padding: 15,
                 borderRadius: 8,
-              }}>
+              }}
+              onPress = {onToggleForm}
+              >
               <Text style={{fontSize: 20, fontWeight: 'bold', color: 'white'}}>
                 Cancel
               </Text>
@@ -83,7 +107,9 @@ export default class Form extends Component {
             backgroundColor: '#28a745',
             alignItems: 'center',
             borderRadius: width / 100,
-          }}>
+          }}
+          onPress = {()=>{onToggleForm()}}
+          >
           <Text
             style={{
               color: 'white',

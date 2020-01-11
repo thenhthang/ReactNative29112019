@@ -2,32 +2,9 @@
 import React, {Component} from 'react';
 import {Text, View, TouchableOpacity} from 'react-native';
 import Child from './Child';
+import { connect } from 'react-redux';
 
-export default class Box extends Component {
-  constructor(props){
-    super(props)
-    this.state = {
-      count: 0
-    }
-    this.increase = this.increase.bind(this)
-    this.decrease = this.decrease.bind(this)
-    this.reset = this.reset.bind(this)
-  }
-  increase(){
-    this.setState({
-      count: this.state.count+1
-    })
-  }
-  decrease(){
-    this.setState({
-      count: this.state.count-1
-    })
-  }
-  reset(){
-    this.setState({
-      count:0
-    })
-  }
+ class Box extends Component {
   render() {
     return (
       <View
@@ -38,7 +15,7 @@ export default class Box extends Component {
           alignItems: 'center',
         }}>
         <Text style={{fontSize: 30, color: 'red'}}>
-          Value = {this.state.count}
+          Value = {this.props.state}
         </Text>
         <TouchableOpacity onPress={()=>{
             this.refs.child.next()
@@ -47,8 +24,18 @@ export default class Box extends Component {
             <Text style={{backgroundColor:'mediumseagreen',
             padding:10,color:'white'}}>Call Child</Text>
         </TouchableOpacity >
-        <Child ref={'child'} increase = {this.increase} decrease = {this.decrease} reset = {this.reset} />
+        <Child ref={'child'} />
       </View>
     );
   }
 }
+//Map du lieu ra props de hien thi len view
+//Cach 1
+// const mapStateToProps = state =>{
+//   return {count:state}
+// }
+// export default connect(mapStateToProps)(Box)
+//Cach 2
+//export default connect(state =>({state}))(Box)
+//Cach 3
+export default connect(state =>{return {state:state}})(Box)

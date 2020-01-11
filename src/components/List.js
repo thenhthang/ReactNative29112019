@@ -25,50 +25,42 @@ export default class List extends Component {
         {id: 4, en: 'Four', vn: 'Bon', isMemorized: true},
         {id: 5, en: 'Five', vn: 'Nam', isMemorized: true},
       ],
-      shouldShowForm: false,
+      shouldShowForm:false,
       optionSelected: 'SHOW_ALL',
     };
+    this.onToggleForm = this.onToggleForm.bind(this)
+    this.onAddWord = this.onAddWord.bind(this)
+    this.onFilterMode = this.onFilterMode.bind(this)
+    this.onToggleMemorized = this.onToggleMemorized.bind(this)
+    this.onRemoveWord = this.onRemoveWord.bind(this)
   }
-  toggleForm = () => {
+  onToggleForm = () => {
     this.setState({shouldShowForm: !this.state.shouldShowForm});
   };
-  addWord = () => {
-    const {txtEn, txtVn} = this.state;
-    if (txtEn.length <= 0 || txtVn.length <= 0) {
-      return alert('Ban chua nhap du thong tin');
-    }
-    const newWord = new WordModel(
-      this.state.words[this.state.words.length - 1].id + 1,
-      txtEn,
-      txtVn,
-    );
+  onAddWord = newWord => {
     const newListWord = this.state.words.concat(newWord);
     newListWord.sort((a, b) => a.name > b.name);
+    console.log(newListWord)
     this.setState({
       words: newListWord,
-      txtEn: '',
-      txtVn: '',
       shouldShowForm: !this.state.shouldShowForm,
     });
   };
-  
-  toggleMemorized = id => {
+  onFilterMode = filterMode =>{
+    this.setState({
+      optionSelected:filterMode
+    })
+  }
+  onToggleMemorized = id => {
     const words = this.state.words.map(word => {
       if (word.id === id) {
         return {...word, isMemorized: !word.isMemorized};
       }
       return word;
     });
-    this.setState({words});
+    this.setState({words:words});
   };
-  removeWord = id => {
-    Alert.alert(
-      'Do you want to remove this word ?',
-      'Choose yes or no',
-      [
-        {
-          text: 'Yes',
-          onPress: () => {
+  onRemoveWord = id => {
             const words = this.state.words.filter(word => {
               if (word.id === id) {
                 return false;
@@ -76,24 +68,26 @@ export default class List extends Component {
               return true;
             });
             this.setState({words});
-          },
-        },
-        {text: 'No', style: 'cancel'},
-      ],
-      {cancelable: false},
-    );
   };
+  
   render() {
     return (
       <KeyboardAwareScrollView
         showsVerticalScrollIndicator={false}
         style={{flex: 1}}>
         <View style={{flex: 1, paddingTop: width / 50}}>
-          <Form shouldShowForm={this.state.shouldShowForm} />
-          <Filter optionSelected={this.state.optionSelected} />
+          <Form onToggleForm = {this.onToggleForm}
+               shouldShowForm = {this.state.shouldShowForm}
+               currentId = {this.state.words.length}
+               onAddWord = {this.onAddWord} />
+          <Filter optionSelected={this.state.optionSelected}
+                  onFilterMode = {this.onFilterMode}
+           />
           <Word
             words={this.state.words}
             optionSelected={this.state.optionSelected}
+            onToggleMemorized = {this.onToggleMemorized}
+            onRemoveWord = {this.onRemoveWord}
           />
         </View>
       </KeyboardAwareScrollView>
