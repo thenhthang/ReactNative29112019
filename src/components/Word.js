@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import {Text, View, TouchableOpacity, FlatList, Alert} from 'react-native';
 import {width, height} from '../dimension';
+import { connect } from 'react-redux';
 
-export default class Word extends Component {
+class Word extends Component {
   //
   removeWord = (id)=>{
     Alert.alert(
@@ -12,7 +13,7 @@ export default class Word extends Component {
         {
           text: 'Yes',
           onPress: () => {
-            this.props.onRemoveWord(id)
+            this.props.dispatch({type:'REMOVE_WORD',id})
           },
         },
         {text: 'No', style: 'cancel'},
@@ -60,7 +61,7 @@ export default class Word extends Component {
               paddingHorizontal: width / 15,
               paddingVertical: width / 40,
             }}
-            onPress = {()=>{this.props.onToggleMemorized(id)}}
+            onPress = {()=>{this.props.dispatch({type:'TOGGLE_MEMORIZED',id:id})}}
             >
             <Text style={{color: 'white', fontSize: width / 20}}>
               {isMemorized ? 'Forgot' : 'isMemorized'}
@@ -96,3 +97,7 @@ export default class Word extends Component {
     );
   }
 }
+const mapStateToProps = state =>{
+  return{words: state.words,optionSelected: state.optionSelected}
+}
+export default connect(mapStateToProps)(Word)

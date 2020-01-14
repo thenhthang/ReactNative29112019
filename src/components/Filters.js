@@ -3,8 +3,8 @@ import React, {Component} from 'react';
 import {Text, View} from 'react-native';
 import {width, height} from '../dimension';
 import {Dropdown} from 'react-native-material-dropdown';
-
-export default class Filter extends Component {
+import { connect } from 'react-redux';
+class Filter extends Component {
   //
   constructor(props) {
     super(props);
@@ -30,8 +30,12 @@ export default class Filter extends Component {
         inputContainerStyle={{borderBottomColor: 'transparent'}}
         dropdownOffset={{top: width * 0.01, left: 0}}
         value={this.props.optionSelected}
-        onChangeText = {(Text)=>{this.props.onFilterMode(Text)}}
+        onChangeText = {(Text)=>{this.props.dispatch({type:'FILTER_MODE',text:Text})}}
       />
     );
   }
 }
+const mapStateToProps = state =>{
+  return {optionSelected:state.optionSelected}
+}
+export default connect(mapStateToProps)(Filter)

@@ -3,9 +3,8 @@ import React, {Component} from 'react';
 import {Text, View, TextInput, TouchableOpacity} from 'react-native';
 import {width, height} from '../dimension';
 import WordModel from '../model/WordModal';
-
-export default class Form extends Component {
-  //
+import { connect } from 'react-redux';
+class Form extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -26,14 +25,15 @@ export default class Form extends Component {
       false
     );
    
-    this.props.onAddWord(newWord)
+    this.props.dispatch({type:'ADD_WORD',newWord})
+    
     this.setState({
       txtEn: '',
       txtVn: ''
     })
   }
   renderForm = () => {
-    const {shouldShowForm,onToggleForm} = this.props;
+    const {shouldShowForm} = this.props;
     if (shouldShowForm) {
       return (
         <View>
@@ -91,7 +91,7 @@ export default class Form extends Component {
                 padding: 15,
                 borderRadius: 8,
               }}
-              onPress = {onToggleForm}
+              onPress = {()=>{this.props.dispatch({type:'TOGGLE_FORM'})}}
               >
               <Text style={{fontSize: 20, fontWeight: 'bold', color: 'white'}}>
                 Cancel
@@ -109,7 +109,7 @@ export default class Form extends Component {
             alignItems: 'center',
             borderRadius: width / 100,
           }}
-          onPress = {()=>{onToggleForm()}}
+          onPress = {()=>{this.props.dispatch({type:'TOGGLE_FORM'})}}
           >
           <Text
             style={{
@@ -126,3 +126,7 @@ export default class Form extends Component {
     return this.renderForm();
   }
 }
+const mapStateToProps = state => {
+  return {shouldShowForm: state.shouldShowForm};
+};
+export default connect (mapStateToProps)(Form)
