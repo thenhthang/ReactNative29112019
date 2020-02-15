@@ -1,9 +1,7 @@
 import React, {Component} from 'react';
 import {Text, View, TouchableOpacity, FlatList, Alert} from 'react-native';
 import {width, height} from '../dimension';
-import { connect } from 'react-redux';
-
-class Word extends Component {
+export default class Word extends Component {
   //
   removeWord = (id)=>{
     Alert.alert(
@@ -13,7 +11,7 @@ class Word extends Component {
         {
           text: 'Yes',
           onPress: () => {
-            this.props.dispatch({type:'REMOVE_WORD',id})
+            this.props.removeWord(id)
           },
         },
         {text: 'No', style: 'cancel'},
@@ -21,8 +19,10 @@ class Word extends Component {
       {cancelable: false},
     );
   }
+  //Nen tach ra thanh Component rieng, de trang truong hop bi render lai nhieu lan
+  //khi thay doi flatList
   renderItemView = item => {
-    const {en, id, vn, isMemorized} = item;
+    const {en, _id, vn, isMemorized} = item;
     const {optionSelected} = this.props;
     if (optionSelected === 'SHOW_FORGOT' && !item.isMemorized) {
       return null;
@@ -61,7 +61,7 @@ class Word extends Component {
               paddingHorizontal: width / 15,
               paddingVertical: width / 40,
             }}
-            onPress = {()=>{this.props.dispatch({type:'TOGGLE_MEMORIZED',id:id})}}
+            onPress = {()=>{this.props.toggleWord(_id)}}
             >
             <Text style={{color: 'white', fontSize: width / 20}}>
               {isMemorized ? 'Forgot' : 'isMemorized'}
@@ -73,7 +73,7 @@ class Word extends Component {
               paddingHorizontal: width / 15,
               paddingVertical: width / 40,
             }}
-            onPress = {()=>{this.removeWord(id)}}
+            onPress = {()=>{this.removeWord(_id)}}
             >
             <Text style={{color: 'black', fontSize: width / 20}}>Remove</Text>
           </TouchableOpacity>
@@ -97,7 +97,13 @@ class Word extends Component {
     );
   }
 }
-const mapStateToProps = state =>{
-  return{words: state.words,optionSelected: state.optionSelected}
-}
-export default connect(mapStateToProps)(Word)
+// const mapStateToProps = state =>{
+//   return{words: state.words,optionSelected: state.optionSelected}
+// }
+// const mapDispatchToProps = dispatch =>{
+//   return {
+//     toggleWord: id => dispatch(toggleMemorized(id)),
+//     removeWord: id => dispatch(removeWord(id))
+//   }
+// }
+// export default connect(mapStateToProps,mapDispatchToProps)(Word)

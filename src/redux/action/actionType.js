@@ -1,0 +1,6 @@
+export const TOGGLE_MEMORIZED = 'TOGGLE_MEMORIZED'
+export const REMOVE_WORD = 'REMOVE_WORD'
+export const TOGGLE_FORM = 'TOGGLE_FORM'
+export const ADD_WORD = 'ADD_WORD'
+export const FILLTER = 'FILTER_MODE'
+export const FETCH_WORDS_API = 'FETCH_WORDS_API'

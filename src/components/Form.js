@@ -3,8 +3,7 @@ import React, {Component} from 'react';
 import {Text, View, TextInput, TouchableOpacity} from 'react-native';
 import {width, height} from '../dimension';
 import WordModel from '../model/WordModal';
-import { connect } from 'react-redux';
-class Form extends Component {
+export default class Form extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -25,7 +24,7 @@ class Form extends Component {
       false
     );
    
-    this.props.dispatch({type:'ADD_WORD',newWord})
+    this.props.addWord(newWord)
     
     this.setState({
       txtEn: '',
@@ -91,7 +90,7 @@ class Form extends Component {
                 padding: 15,
                 borderRadius: 8,
               }}
-              onPress = {()=>{this.props.dispatch({type:'TOGGLE_FORM'})}}
+              onPress = {()=>{this.props.toggleForm()}}
               >
               <Text style={{fontSize: 20, fontWeight: 'bold', color: 'white'}}>
                 Cancel
@@ -109,14 +108,14 @@ class Form extends Component {
             alignItems: 'center',
             borderRadius: width / 100,
           }}
-          onPress = {()=>{this.props.dispatch({type:'TOGGLE_FORM'})}}
+          onPress = {()=>{this.props.toggleForm()}}
           >
           <Text
             style={{
               color: 'white',
               fontSize: width / 15,
             }}>
-            +
+            
           </Text>
         </TouchableOpacity>
       );
@@ -126,7 +125,14 @@ class Form extends Component {
     return this.renderForm();
   }
 }
-const mapStateToProps = state => {
-  return {shouldShowForm: state.shouldShowForm};
-};
-export default connect (mapStateToProps)(Form)
+
+// const mapStateToProps = state => {
+//   return {shouldShowForm: state.shouldShowForm};
+// };
+// const mapDispatchToProps = dispatch =>{
+//   return {
+//     toggleForm: () => dispatch(toggleForm()),
+//     addWord: newWord => dispatch(addWord(newWord))
+//   }
+// }
+// export default connect (mapStateToProps,mapDispatchToProps)(Form)
